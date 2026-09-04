@@ -10,7 +10,7 @@ This project is intentionally independent from the main GZR website. It uses a s
 
 ## Employee card template
 
-The current card entry is **Ghrazielle De Ramos** at `ghrazielle_deramos`.
+The current card entry is **Ghrazielle Rei de Ramos**, **Underpaid Only Anak** at `ghrazielle_deramos`.
 
 To add another employee card in this same repository:
 

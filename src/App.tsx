@@ -45,7 +45,7 @@ const employeeCards: EmployeeCard[] = [{
   slug: initialEmployee.username,
   employee: initialEmployee,
   portrait: portraitPath,
-  alt: 'Ghrazielle Rei de Ramos, Only Anak at GZR Enterprises',
+  alt: 'Ghrazielle Rei de Ramos, Underpaid Only Anak at GZR Enterprises',
 }];
 
 function LinkPill({ href, icon, label, testId, iconOnly = false }: { href: string; icon: ReactNode; label: string; testId: string; iconOnly?: boolean }) {
