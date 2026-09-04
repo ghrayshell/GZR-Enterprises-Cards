@@ -43,8 +43,9 @@ const employeeCards: EmployeeCard[] = [{
 
 function LinkPill({ href, icon, label, testId, iconOnly = false }: { href: string; icon: ReactNode; label: string; testId: string; iconOnly?: boolean }) {
   const tone = 'border-white/80 bg-white text-[#164779] shadow-[0_4px_10px_rgba(255,255,255,.14)] hover:border-[#82bde8] hover:bg-white';
-  return <a data-testid={testId} aria-label={label} title={label} href={href} target="_blank" rel="noreferrer" className={`action-link inline-flex min-h-11 items-center gap-2 rounded-full border px-4 text-sm font-semibold ${tone}`}>
-    {icon}<span className={iconOnly ? 'sr-only' : undefined}>{label}</span>{!iconOnly && <ExternalLink size={13} className="ml-0.5 text-current/60" />}
+  const sizing = iconOnly ? 'h-10 w-10 shrink-0 justify-center px-0 sm:h-11 sm:w-11' : 'min-w-0 flex-1 gap-1.5 px-2.5 text-xs sm:min-h-11 sm:flex-none sm:gap-2 sm:px-4 sm:text-sm';
+  return <a data-testid={testId} aria-label={label} title={label} href={href} target="_blank" rel="noreferrer" className={`action-link inline-flex min-h-10 items-center rounded-full border font-semibold ${sizing} ${tone}`}>
+    {icon}<span className={iconOnly ? 'sr-only' : 'whitespace-nowrap'}>{label}</span>{!iconOnly && <ExternalLink size={13} className="shrink-0 text-current/60" />}
   </a>;
 }
 
@@ -125,7 +126,7 @@ function ContactCard({ card }: { card: EmployeeCard }) {
               <a data-testid="link-call-hero" href={`tel:${phoneValue}`} className="action-link inline-flex min-h-16 w-full items-center justify-center gap-3 rounded-xl border border-[#9fc5ed] bg-[#cce2ff] px-6 py-4 text-base font-bold text-[#004aad] shadow-[0_5px_12px_rgba(204,226,255,.2)] hover:border-[#82bde8]"><Phone size={19} /> Call {employee.firstName}</a>
               <a data-testid="link-viber-hero" aria-label={`Send ${employee.firstName} a text message`} href={`sms:${phoneValue}`} className="action-link inline-flex min-h-16 w-full items-center justify-center gap-3 rounded-xl border border-[#4c83d2] bg-[#004aad] px-6 py-4 text-base font-bold text-white shadow-[0_5px_12px_rgba(0,74,173,.18)] hover:border-[#82bde8]"><MessageCircle size={20} /> Send a Text Message</a>
             </div>
-            <div className="mt-6 flex w-full flex-wrap justify-center gap-2 lg:mx-auto lg:mt-8 lg:w-[300px]">
+            <div className="mt-6 flex w-full flex-nowrap justify-center gap-1.5 lg:mx-auto lg:mt-8 lg:w-[300px] lg:gap-2">
               {employee.website && <LinkPill href={employee.website} label="GZR Website" testId="link-website-hero" icon={<Globe2 size={15} />} />}
               {employee.linkedin && <LinkPill href={employee.linkedin} label="LinkedIn" iconOnly testId="link-linkedin-hero" icon={<Linkedin size={17} />} />}
               {employee.phone && <LinkPill href={viberHref} label="Viber" iconOnly testId="link-viber-shortcut" icon={<SiViber size={18} />} />}
