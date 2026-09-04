@@ -4,8 +4,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "cp site-entry.txt index.html && cp public/404-source.txt public/404.html && vite --config vite.config.ts --host 0.0.0.0",
-    "build": "cp site-entry.txt index.html && cp public/404-source.txt public/404.html && vite build --config vite.config.ts",
+    "dev": "base64 -d site-entry.gz.b64 | gzip -dc > index.html && base64 -d public/404.gz.b64 | gzip -dc > public/404.html && vite --config vite.config.ts --host 0.0.0.0",
+    "build": "base64 -d site-entry.gz.b64 | gzip -dc > index.html && base64 -d public/404.gz.b64 | gzip -dc > public/404.html && vite build --config vite.config.ts",
     "serve": "vite preview --config vite.config.ts --host 0.0.0.0",
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
