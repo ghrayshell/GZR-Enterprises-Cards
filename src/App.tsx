@@ -109,9 +109,9 @@ function ContactCard({ card }: { card: EmployeeCard }) {
               <div className="portrait-slot portrait-grid relative aspect-[4/5] w-48 shrink-0 self-center rounded-[1.65rem] border-4 border-white/15 shadow-lg max-[380px]:w-44 sm:aspect-auto sm:self-stretch sm:w-44">
                 <img data-testid="img-employee-headshot" src={card.portrait} alt={card.alt} className="portrait-image absolute inset-0 h-full w-full rounded-[1.35rem]" />
               </div>
-              <div className="hero-copy w-full min-w-0 text-center sm:w-auto sm:text-left">
+              <div className="w-full min-w-0 text-center sm:flex-1 sm:text-left">
                 <p className="mb-3 whitespace-nowrap text-sm font-semibold uppercase tracking-[.18em] text-[#8eb7d9] sm:text-xs">Hello, I'm</p>
-                <h1 data-testid="text-employee-name" className="display-font max-w-[620px] break-words text-[clamp(1.6rem,8vw,5.4rem)] font-semibold leading-[.92] tracking-[-.075em] sm:text-[clamp(2.25rem,6.8vw,5.4rem)] lg:text-[clamp(2.25rem,12.5cqw,5.4rem)]"><span>{employee.firstName}</span>{' '}<span>{employee.lastName}</span></h1>
+                <h1 data-testid="text-employee-name" className="display-font max-w-[620px] break-words text-[clamp(1.6rem,8vw,5.4rem)] font-semibold leading-[.92] tracking-[-.075em] sm:text-[clamp(2.25rem,6.8vw,5.4rem)] lg:text-[clamp(2.25rem,5.5vw,5.4rem)]"><span>{employee.firstName}</span>{' '}<span>{employee.lastName}</span></h1>
                 <p data-testid="text-employee-title" className="mt-3 text-[clamp(.72rem,3.8vw,1.125rem)] font-medium leading-6 text-[#b9dbf4] sm:mt-5 sm:text-lg"><span className="whitespace-nowrap">{employee.title}</span> <span className="mx-2 text-[#5286b4]">/</span> <span data-testid="text-employee-department" className="whitespace-nowrap">{employee.department}</span></p>
               </div>
             </div>
