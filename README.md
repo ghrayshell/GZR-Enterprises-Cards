@@ -26,7 +26,7 @@ The contact actions are native `tel:` and `mailto:` links. The company email is 
 
 ### Messenger and social link previews
 
-The nested employee URL has a dedicated `public/ghrazielle_deramos/index.html` entry, so GitHub Pages serves it with HTTP 200 and social crawlers receive the card title, description, and absolute `og-card-ghrazielle_deramos.png` preview image. The browser then follows the static meta redirect into the interactive React card. The `404.html` fallback remains for other direct nested paths. If Messenger shows an older preview after a change, send the URL again with a harmless query string such as `?preview=2`; Messenger caches link previews independently.
+The nested employee URL has a dedicated `public/ghrazielle_deramos/index.html` entry, so GitHub Pages serves it with HTTP 200 and social crawlers receive the card title, description, and absolute 8-bit JPEG `og-card-ghrazielle_deramos.jpg` preview image. The browser then follows the static meta redirect into the interactive React card. The `404.html` fallback remains for other direct nested paths. If Messenger shows an older preview after a change, send the URL again with a harmless query string such as `?preview=2`; Messenger caches link previews independently.
 
 ## Edit or remove an existing card
 
@@ -80,7 +80,8 @@ src/App.tsx                           # employee card list, landing page, card U
 src/index.css                         # GZR visual language and responsive styling
 site-entry.gz.b64                     # compressed source for the Vite index.html entry
 public/gzr-logo.png                   # self-contained local GZR mark
-public/og-card-ghrazielle_deramos.png # Messenger/Facebook link preview image
+public/og-card-ghrazielle_deramos.jpg # Messenger/Facebook link preview image
+public/og-card-ghrazielle_deramos.png # original high-depth preview asset
 public/ghrazielle_deramos/index.html  # HTTP 200 nested route with share metadata
 public/404.gz.b64                     # compressed source for the GitHub Pages fallback
 pnpm-lock.yaml                        # standalone dependency lockfile for Pages CI
