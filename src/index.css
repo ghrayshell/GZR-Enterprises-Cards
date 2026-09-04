@@ -84,7 +84,6 @@ button { cursor: pointer; }
   mask-image: linear-gradient(to bottom, black, transparent 82%);
 }
 .display-font { font-family: var(--app-font-display); }
-.hero-copy { container-type: inline-size; }
 .fade-up { animation: fade-up .65s cubic-bezier(.22,.7,.28,1) both; }
 .fade-up-1 { animation-delay: .1s; }
 .fade-up-2 { animation-delay: .18s; }
