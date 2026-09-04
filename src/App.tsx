@@ -1,4 +1,4 @@
-import { useState, type ReactNode } from 'react';
+import { useEffect, useState, type ReactNode } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { BriefcaseBusiness, Check, ExternalLink, Globe2, Linkedin, Mail, MessageCircle, Phone, Save, Share2, Sparkles } from 'lucide-react';
 import { SiViber } from 'react-icons/si';
@@ -216,12 +216,21 @@ function restoreFallbackRoute() {
 function Router() {
   return <Switch><Route path="/:slug/" component={EmployeeCardRoute} /><Route path="/:slug" component={EmployeeCardRoute} /><Route path="/" component={CardDirectory} /><Route component={NotFound} /></Switch>;
 }
+function PageTitle() {
+  const [location] = useLocation();
+  useEffect(() => {
+    const slug = location.split('/').filter(Boolean).at(-1);
+    const card = employeeCards.find((entry) => entry.slug === slug);
+    document.title = card ? `GZR Card – ${card.employee.firstName} ${card.employee.lastName}` : 'GZR Enterprises | Cards';
+  }, [location]);
+  return null;
+}
 function RoutedErrorBoundary({ children }: { children: ReactNode }) {
   const [location] = useLocation();
   return <ErrorBoundary resetKey={location}>{children}</ErrorBoundary>;
 }
 function App() {
   restoreFallbackRoute();
-  return <QueryClientProvider client={queryClient}><TooltipProvider><WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, '')}><RoutedErrorBoundary><Router /></RoutedErrorBoundary></WouterRouter><Toaster /></TooltipProvider></QueryClientProvider>;
+  return <QueryClientProvider client={queryClient}><TooltipProvider><WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, '')}><PageTitle /><RoutedErrorBoundary><Router /></RoutedErrorBoundary></WouterRouter><Toaster /></TooltipProvider></QueryClientProvider>;
 }
 export default App;
