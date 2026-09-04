@@ -24,6 +24,12 @@ To add another employee card in this same repository:
 
 The contact actions are native `tel:` and `mailto:` links. “Save to Contacts” creates a standards-compatible `.vcf` file in the browser using the current values from the template record.
 
+## Edit or remove an existing card
+
+To edit Ghrazielle’s current card, open `src/App.tsx` and update the values in `initialEmployee`. The name, title, company, phone, email, website, LinkedIn URL, location, contact links, vCard, and page copy all use that record. If the employee or URL slug changes, also update `employeeSlug`, the portrait filename in `portraitPath`, and the image `alt` text.
+
+To remove a card, delete its entry from the `employeeCards` array. If it is no longer used by another entry, its headshot can also be deleted from `public/`. The old employee URL will no longer resolve to a card; keep `CNAME`, the Pages workflow, and the fallback source files.
+
 ## Local development
 
 This is a Vite + React app. From the repository root:
