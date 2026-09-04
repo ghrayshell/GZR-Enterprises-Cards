@@ -8,31 +8,33 @@ import { Toaster } from '@/components/ui/toaster';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import NotFound from '@/pages/not-found';
 const logoPath = `${import.meta.env.BASE_URL}gzr-logo.png`;
-const portraitPath = `${import.meta.env.BASE_URL}ghrazielle-headshot.jpg`;
 const companyWebsite = 'https://gzrenterprises.com';
+const companyLinkedin = 'https://www.linkedin.com/company/gzr-enterprises';
+const companyEmailDomain = 'gzrenterprises.com';
 
 const queryClient = new QueryClient();
 type Employee = {
-  firstName: string; lastName: string; title: string; department: string; company: string; phone: string; email: string;
+  username: string; firstName: string; lastName: string; title: string; department: string; company: string; phone: string; additionalEmail: string;
   website: string; websiteLabel: string; linkedin: string; location: string; heroBio: string; note: string; shareCaption: string;
 };
-const employeeSlug = 'ghrazielle_deramos';
 const initialEmployee: Employee = {
+  username: 'ghrazielle_deramos',
   firstName: 'Ghrazielle Rei',
   lastName: 'de Ramos',
-  title: 'Only Anak',
+  title: 'Underpaid Only Anak',
   department: 'Lahat Department',
   company: 'GZR Enterprises',
   phone: '(+63) 933 862 0716',
-  email: 'ghrazielle_deramos@gzrenterprises.com',
+  additionalEmail: '',
   website: companyWebsite,
   websiteLabel: 'GZR Website',
-  linkedin: 'https://www.linkedin.com/company/gzr-enterprises',
+  linkedin: 'https://www.linkedin.com/in/ghrazielle/',
   location: 'Antipolo City, Philippines',
-  heroBio: 'The person to call when a project needs a clear path up. Let’s connect and move the work forward.',
+  heroBio: 'The person to call when a project needs a clear path up. Let’s connect and move work forward!',
   note: 'GZR Enterprises partners with teams that value precision, progress, and a job done right. Ghrazielle Rei is here to make every next step feel straightforward.',
   shareCaption: 'Connect with Ghrazielle Rei de Ramos through her GZR Enterprises digital business card.',
 };
+const portraitPath = `${import.meta.env.BASE_URL}headshot-${initialEmployee.username}.jpg`;
 type EmployeeCard = {
   slug: string;
   employee: Employee;
@@ -40,7 +42,7 @@ type EmployeeCard = {
   alt: string;
 };
 const employeeCards: EmployeeCard[] = [{
-  slug: employeeSlug,
+  slug: initialEmployee.username,
   employee: initialEmployee,
   portrait: portraitPath,
   alt: 'Ghrazielle Rei de Ramos, Only Anak at GZR Enterprises',
@@ -54,30 +56,43 @@ function LinkPill({ href, icon, label, testId, iconOnly = false }: { href: strin
   </a>;
 }
 
+function EmailAddress({ email }: { email: string }) {
+  const atIndex = email.indexOf('@');
+  if (atIndex < 1) return <span className="block break-all">{email}</span>;
+  return <span className="block"><span className="inline-block whitespace-nowrap">{email.slice(0, atIndex)}</span><wbr /><span className="inline-block whitespace-nowrap">@{email.slice(atIndex + 1)}</span></span>;
+}
+
 function ContactCard({ card }: { card: EmployeeCard }) {
   const employee = card.employee;
   const [saved, setSaved] = useState(false);
   const [shared, setShared] = useState(false);
   const fullName = `${employee.firstName} ${employee.lastName}`;
   const phoneValue = employee.phone.replace(/[^\d+]/g, '');
-  const [emailUsername, emailDomain] = employee.email.split('@');
+  const companyEmail = `${employee.username}@${companyEmailDomain}`;
+  const emailAddresses = [companyEmail, employee.additionalEmail.trim()].filter(Boolean);
+  const emailHref = `mailto:${emailAddresses.join(',')}`;
   const viberHref = `viber://chat?number=${encodeURIComponent(phoneValue)}`;
+  const websiteHref = employee.website || companyWebsite;
+  const websiteLabel = employee.websiteLabel || 'GZR Website';
+  const linkedinHref = employee.linkedin || companyLinkedin;
 
   const downloadVCard = () => {
     const vcard = [
       'BEGIN:VCARD', 'VERSION:3.0',
       `N:${employee.lastName};${employee.firstName};;;`, `FN:${fullName}`,
       `ORG:${employee.company};${employee.department}`, `TITLE:${employee.title}`,
-      `TEL;TYPE=WORK,VOICE:${phoneValue}`, `EMAIL;TYPE=WORK:${employee.email}`,
-      employee.website ? `URL:${employee.website}` : '',
-      employee.linkedin ? `X-SOCIALPROFILE;TYPE=linkedin:${employee.linkedin}` : '',
+      `TEL;TYPE=WORK,VOICE:${phoneValue}`,
+      `EMAIL;TYPE=WORK:${companyEmail}`,
+      employee.additionalEmail.trim() ? `EMAIL;TYPE=INTERNET:${employee.additionalEmail.trim()}` : '',
+      `URL:${websiteHref}`,
+      linkedinHref ? `X-SOCIALPROFILE;TYPE=linkedin:${linkedinHref}` : '',
       employee.location ? `ADR;TYPE=WORK:;;${employee.location};;;;` : '',
       'END:VCARD',
     ].filter(Boolean).join('\r\n');
     const blob = new Blob([vcard], { type: 'text/vcard;charset=utf-8' });
     const url = URL.createObjectURL(blob);
     const anchor = document.createElement('a');
-    anchor.href = url; anchor.download = `${fullName.replace(/\s+/g, '-')}.vcf`; anchor.click();
+    anchor.href = url; anchor.download = `GZR-${card.slug}.vcf`; anchor.click();
     URL.revokeObjectURL(url);
     setSaved(true); window.setTimeout(() => setSaved(false), 2600);
   };
@@ -91,7 +106,7 @@ function ContactCard({ card }: { card: EmployeeCard }) {
     } catch { /* The share sheet was dismissed. */ }
   };
 
-  return <main className="card-page min-h-[100dvh] px-4 py-5 sm:px-8 sm:py-8 lg:py-4">
+  return <main className="card-page min-h-[100dvh] overflow-x-hidden px-4 py-5 sm:px-8 sm:py-8 lg:py-4">
     <div className="mx-auto max-w-[1080px]">
       <header className="fade-up flex items-center justify-between px-1 pb-5 sm:px-2">
         <a href={companyWebsite} target="_blank" rel="noreferrer" aria-label="Visit GZR Enterprises website" className="flex items-center gap-2.5">
@@ -132,8 +147,8 @@ function ContactCard({ card }: { card: EmployeeCard }) {
               <a data-testid="link-viber-hero" aria-label={`Send ${employee.firstName} a text message`} href={`sms:${phoneValue}`} className="action-link inline-flex min-h-16 w-full items-center justify-center gap-3 rounded-xl border border-[#4c83d2] bg-[#004aad] px-6 py-4 text-base font-bold text-white shadow-[0_5px_12px_rgba(0,74,173,.18)] hover:border-[#82bde8]"><MessageCircle size={20} /> Send a Text Message</a>
             </div>
             <div className="mt-6 flex w-full flex-nowrap justify-center gap-1.5 lg:mx-auto lg:mt-8 lg:w-[300px] lg:gap-2">
-              {employee.website && <LinkPill href={employee.website} label={employee.websiteLabel} testId="link-website-hero" icon={<Globe2 size={15} />} />}
-              {employee.linkedin && <LinkPill href={employee.linkedin} label="LinkedIn" iconOnly testId="link-linkedin-hero" icon={<Linkedin size={17} />} />}
+              <LinkPill href={websiteHref} label={websiteLabel} testId="link-website-hero" icon={<Globe2 size={15} />} />
+              {linkedinHref && <LinkPill href={linkedinHref} label="LinkedIn" iconOnly testId="link-linkedin-hero" icon={<Linkedin size={17} />} />}
               {employee.phone && <LinkPill href={viberHref} label="Viber" iconOnly testId="link-viber-shortcut" icon={<SiViber size={18} />} />}
             </div>
           </div>
@@ -151,11 +166,11 @@ function ContactCard({ card }: { card: EmployeeCard }) {
                 <span data-testid="text-phone" className="mt-1 block max-w-full break-words text-sm font-semibold leading-6 text-[#123d68]">{employee.phone}</span>
               </span>
             </a>
-            <a data-testid="link-email" href={`mailto:${employee.email}`} className="action-link group flex min-h-[72px] items-center gap-4 rounded-xl border border-[#d2e2ee] bg-white px-4 py-4 hover:border-[#82bde8] lg:px-5">
+            <a data-testid="link-email" href={emailHref} className="action-link group flex min-h-[72px] items-center gap-4 rounded-xl border border-[#d2e2ee] bg-white px-4 py-4 hover:border-[#82bde8] lg:px-5">
               <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-[#e7f3fc] text-[#1164a6]"><Mail size={18} /></span>
               <span className="min-w-0 flex-1">
                 <span className="block text-[10px] font-bold uppercase tracking-[.12em] text-slate-400">Email</span>
-                <span data-testid="text-email" className="mt-1 block max-w-full break-words text-sm font-semibold leading-6 text-[#123d68]"><span className="inline-block whitespace-nowrap">{emailUsername}</span><wbr /><span className="inline-block whitespace-nowrap">@{emailDomain}</span></span>
+                <span data-testid="text-email" className="mt-1 block max-w-full break-words text-sm font-semibold leading-6 text-[#123d68]">{emailAddresses.map((email) => <EmailAddress key={email} email={email} />)}</span>
               </span>
             </a>
           </div>
