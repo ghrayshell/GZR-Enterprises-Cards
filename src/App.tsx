@@ -1,4 +1,4 @@
-import { useEffect, useState, type ReactNode } from 'react';
+import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { BriefcaseBusiness, Check, ExternalLink, Globe2, Linkedin, Mail, MessageCircle, Phone, Save, Share2, Sparkles } from 'lucide-react';
 import { SiViber } from 'react-icons/si';
@@ -9,11 +9,12 @@ import { TooltipProvider } from '@/components/ui/tooltip';
 import NotFound from '@/pages/not-found';
 const logoPath = `${import.meta.env.BASE_URL}gzr-logo.png`;
 const portraitPath = `${import.meta.env.BASE_URL}ghrazielle-headshot.jpg`;
+const companyWebsite = 'https://gzrenterprises.com';
 
 const queryClient = new QueryClient();
 type Employee = {
   firstName: string; lastName: string; title: string; department: string; company: string; phone: string; email: string;
-  website: string; linkedin: string; location: string;
+  website: string; websiteLabel: string; linkedin: string; location: string; heroBio: string; note: string; shareCaption: string;
 };
 const employeeSlug = 'ghrazielle_deramos';
 const initialEmployee: Employee = {
@@ -24,9 +25,13 @@ const initialEmployee: Employee = {
   company: 'GZR Enterprises',
   phone: '(+63) 933 862 0716',
   email: 'ghrazielle_deramos@gzrenterprises.com',
-  website: 'https://gzrenterprises.com',
+  website: companyWebsite,
+  websiteLabel: 'GZR Website',
   linkedin: 'https://www.linkedin.com/company/gzr-enterprises',
   location: 'Antipolo City, Philippines',
+  heroBio: 'The person to call when a project needs a clear path up. Let’s connect and move the work forward.',
+  note: 'GZR Enterprises partners with teams that value precision, progress, and a job done right. Ghrazielle Rei is here to make every next step feel straightforward.',
+  shareCaption: 'Connect with Ghrazielle Rei de Ramos through her GZR Enterprises digital business card.',
 };
 type EmployeeCard = {
   slug: string;
@@ -80,7 +85,7 @@ function ContactCard({ card }: { card: EmployeeCard }) {
   const shareCard = async () => {
     const url = window.location.href;
     try {
-      if (navigator.share) await navigator.share({ title: fullName, text: `${fullName} — ${employee.title}, ${employee.company}`, url });
+      if (navigator.share) await navigator.share({ title: fullName, text: employee.shareCaption, url });
       else await navigator.clipboard.writeText(url);
       setShared(true); window.setTimeout(() => setShared(false), 2200);
     } catch { /* The share sheet was dismissed. */ }
@@ -89,12 +94,12 @@ function ContactCard({ card }: { card: EmployeeCard }) {
   return <main className="card-page min-h-[100dvh] px-4 py-5 sm:px-8 sm:py-8 lg:py-4">
     <div className="mx-auto max-w-[1080px]">
       <header className="fade-up flex items-center justify-between px-1 pb-5 sm:px-2">
-        <div className="flex items-center gap-2.5">
+        <a href={companyWebsite} target="_blank" rel="noreferrer" aria-label="Visit GZR Enterprises website" className="flex items-center gap-2.5">
           <img data-testid="img-gzr-logo-header" src={logoPath} alt="GZR Enterprises mark" className="logo-mark h-9 w-9 rounded-full" />
             <div className="leading-none">
              <div data-testid="text-company-wordmark" className="display-font text-[18px] font-bold tracking-[.12em] text-[#064798] sm:text-[19px]">GZR <span className="font-normal tracking-[.18em] text-[#6b89aa]">ENTERPRISES</span></div>
           </div>
-        </div>
+        </a>
         <div className="flex items-center gap-2">
           <span className="hidden items-center gap-1.5 rounded-full border border-[#c4ddec] bg-white/70 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[.12em] text-[#266095] sm:flex"><span className="h-1.5 w-1.5 rounded-full bg-[#18b6d3] shadow-[0_0_8px_rgba(24,182,211,.95)]" /> Digital card</span>
           <button data-testid="button-share-card" onClick={shareCard} aria-label="Share contact card" className="action-link rounded-full border border-[#c4ddec] bg-white/70 p-2.5 text-[#164779] hover:bg-white">{shared ? <Check size={17} /> : <Share2 size={17} />}</button>
@@ -118,7 +123,7 @@ function ContactCard({ card }: { card: EmployeeCard }) {
               </div>
             </div>
             <span className="mt-3 inline-flex self-center items-center gap-1.5 rounded-full border border-[#4d8bb2]/70 bg-[#0b4e87]/60 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[.12em] text-[#bdf8ff] sm:hidden"><span className="h-1.5 w-1.5 rounded-full bg-[#2de8ff] shadow-[0_0_8px_rgba(45,232,255,.95)]" /> Digital card</span>
-            <p className="mt-7 w-full text-center text-sm leading-6 text-[#c2d9ec] sm:mt-9 sm:text-left lg:max-w-xl">The person to call when a project needs a clear path up. Let’s connect and move the work forward.</p>
+            <p className="mt-7 w-full text-center text-sm leading-6 text-[#c2d9ec] sm:mt-9 sm:text-left lg:max-w-[620px]">{employee.heroBio}</p>
           </div>
           <div className="w-full lg:flex lg:flex-col lg:items-center lg:justify-self-center lg:self-center">
             <div className="grid w-full gap-2 lg:mx-auto lg:w-[300px]">
@@ -127,7 +132,7 @@ function ContactCard({ card }: { card: EmployeeCard }) {
               <a data-testid="link-viber-hero" aria-label={`Send ${employee.firstName} a text message`} href={`sms:${phoneValue}`} className="action-link inline-flex min-h-16 w-full items-center justify-center gap-3 rounded-xl border border-[#4c83d2] bg-[#004aad] px-6 py-4 text-base font-bold text-white shadow-[0_5px_12px_rgba(0,74,173,.18)] hover:border-[#82bde8]"><MessageCircle size={20} /> Send a Text Message</a>
             </div>
             <div className="mt-6 flex w-full flex-nowrap justify-center gap-1.5 lg:mx-auto lg:mt-8 lg:w-[300px] lg:gap-2">
-              {employee.website && <LinkPill href={employee.website} label="GZR Website" testId="link-website-hero" icon={<Globe2 size={15} />} />}
+              {employee.website && <LinkPill href={employee.website} label={employee.websiteLabel} testId="link-website-hero" icon={<Globe2 size={15} />} />}
               {employee.linkedin && <LinkPill href={employee.linkedin} label="LinkedIn" iconOnly testId="link-linkedin-hero" icon={<Linkedin size={17} />} />}
               {employee.phone && <LinkPill href={viberHref} label="Viber" iconOnly testId="link-viber-shortcut" icon={<SiViber size={18} />} />}
             </div>
@@ -139,18 +144,30 @@ function ContactCard({ card }: { card: EmployeeCard }) {
         <div className="soft-shadow rounded-[1.5rem] border border-[#d5e4ef] bg-[#f8fbfd] p-5 sm:p-7">
           <div className="mb-5 flex items-start justify-between gap-4 lg:mb-4"><div className="lg:flex lg:items-baseline lg:gap-3"><p className="whitespace-nowrap text-[10px] font-bold uppercase tracking-[.18em] text-[#3975a7] lg:text-lg lg:tracking-[.08em]">Reach me directly</p><h2 className="display-font mt-2 whitespace-nowrap text-2xl font-semibold tracking-[-.04em] text-[#0d315b] lg:mt-0 lg:text-base lg:font-medium lg:tracking-[-.02em]">Keep this card close.</h2></div><div className="rounded-xl bg-[#dceefd] p-3 text-[#1463a1] lg:p-2.5"><Sparkles size={19} className="lg:h-4 lg:w-4" /></div></div>
           <div className="grid gap-3 lg:gap-2">
-            <a data-testid="link-phone" href={`tel:${phoneValue}`} className="action-link group flex min-h-[72px] items-center gap-3 rounded-xl border border-[#d2e2ee] bg-white px-4 hover:border-[#82bde8] lg:min-h-[72px] lg:px-5"><span className="rounded-lg bg-[#e7f3fc] p-2.5 text-[#1164a6] lg:p-2.5"><Phone size={18} /></span><span><span className="block text-[10px] font-bold uppercase tracking-[.12em] text-slate-400">Phone</span><span data-testid="text-phone" className="mt-1 block text-sm font-semibold text-[#123d68]">{employee.phone}</span></span></a>
-            <a data-testid="link-email" href={`mailto:${employee.email}`} className="action-link group flex min-h-[72px] items-center gap-3 rounded-xl border border-[#d2e2ee] bg-white px-4 hover:border-[#82bde8] lg:min-h-[72px] lg:px-5"><span className="rounded-lg bg-[#e7f3fc] p-2.5 text-[#1164a6] lg:p-2.5"><Mail size={18} /></span><span className="min-w-0"><span className="block text-[10px] font-bold uppercase tracking-[.12em] text-slate-400">Email</span><span data-testid="text-email" className="mt-1 block break-normal text-sm font-semibold text-[#123d68]"><span className="inline-block whitespace-nowrap">{emailUsername}</span><wbr /><span className="inline-block whitespace-nowrap">@{emailDomain}</span></span></span></a>
+            <a data-testid="link-phone" href={`tel:${phoneValue}`} className="action-link group flex min-h-[72px] items-center gap-4 rounded-xl border border-[#d2e2ee] bg-white px-4 py-4 hover:border-[#82bde8] lg:px-5">
+              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-[#e7f3fc] text-[#1164a6]"><Phone size={18} /></span>
+              <span className="min-w-0 flex-1">
+                <span className="block text-[10px] font-bold uppercase tracking-[.12em] text-slate-400">Phone</span>
+                <span data-testid="text-phone" className="mt-1 block max-w-full break-words text-sm font-semibold leading-6 text-[#123d68]">{employee.phone}</span>
+              </span>
+            </a>
+            <a data-testid="link-email" href={`mailto:${employee.email}`} className="action-link group flex min-h-[72px] items-center gap-4 rounded-xl border border-[#d2e2ee] bg-white px-4 py-4 hover:border-[#82bde8] lg:px-5">
+              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-[#e7f3fc] text-[#1164a6]"><Mail size={18} /></span>
+              <span className="min-w-0 flex-1">
+                <span className="block text-[10px] font-bold uppercase tracking-[.12em] text-slate-400">Email</span>
+                <span data-testid="text-email" className="mt-1 block max-w-full break-words text-sm font-semibold leading-6 text-[#123d68]"><span className="inline-block whitespace-nowrap">{emailUsername}</span><wbr /><span className="inline-block whitespace-nowrap">@{emailDomain}</span></span>
+              </span>
+            </a>
           </div>
         </div>
         <div className="soft-shadow rounded-[1.5rem] border border-[#d5e4ef] bg-white p-5 sm:p-7 lg:p-6">
-          <div className="flex items-start justify-between"><div className="lg:translate-y-1 lg:flex lg:items-baseline lg:gap-3"><p className="whitespace-nowrap text-[10px] font-bold uppercase tracking-[.18em] text-[#3975a7] lg:text-lg lg:tracking-[.08em]">A note from GZR</p><h2 className="display-font mt-2 whitespace-nowrap text-2xl font-semibold tracking-[-.04em] text-[#0d315b] lg:mt-0 lg:text-base lg:font-medium lg:tracking-[-.02em]">Built for the way up.</h2></div><BriefcaseBusiness size={21} className="text-[#3975a7] lg:h-6 lg:w-6" /></div>
-          <p className="mt-6 text-sm leading-6 text-slate-600 lg:mt-7 lg:translate-y-1.5">GZR Enterprises partners with teams that value precision, progress, and a job done right. {employee.firstName} is here to make every next step feel straightforward.</p>
-          <div className="mt-6 flex items-center gap-3 border-t border-slate-100 pt-5 lg:mt-7 lg:pt-4"><img src={logoPath} alt="" className="h-10 w-10 rounded-full" /><div><div className="display-font text-[13px] font-bold tracking-[.1em] text-[#14519a]">GZR <span className="font-normal text-[#7a95b3]">ENTERPRISES</span></div><p className="mt-1 text-[10px] uppercase tracking-[.12em] text-slate-400">Elevators · Escalators · Expertise</p></div></div>
+          <div className="flex items-start justify-between"><div className="lg:translate-y-1 lg:flex lg:items-baseline lg:gap-3"><a href={companyWebsite} target="_blank" rel="noreferrer" className="whitespace-nowrap text-[10px] font-bold uppercase tracking-[.18em] text-[#3975a7] hover:text-[#14519a] lg:text-lg lg:tracking-[.08em]">A note from GZR</a><h2 className="display-font mt-2 whitespace-nowrap text-2xl font-semibold tracking-[-.04em] text-[#0d315b] lg:mt-0 lg:text-base lg:font-medium lg:tracking-[-.02em]">Built for the way up.</h2></div><BriefcaseBusiness size={21} className="text-[#3975a7] lg:h-6 lg:w-6" /></div>
+          <p className="mt-6 text-sm leading-6 text-slate-600 lg:mt-7 lg:translate-y-1.5">{employee.note}</p>
+          <div className="mt-6 flex items-center gap-3 border-t border-slate-100 pt-5 lg:mt-7 lg:pt-4"><a href={companyWebsite} target="_blank" rel="noreferrer" aria-label="Visit GZR Enterprises website" className="shrink-0"><img src={logoPath} alt="GZR Enterprises mark" className="h-10 w-10 rounded-full" /></a><div><a href={companyWebsite} target="_blank" rel="noreferrer" className="display-font text-[13px] font-bold tracking-[.1em] text-[#14519a] hover:text-[#064798]">GZR <span className="font-normal text-[#7a95b3]">ENTERPRISES</span></a><p className="mt-1 text-[10px] uppercase tracking-[.12em] text-slate-400">Elevators · Escalators · Expertise</p></div></div>
         </div>
       </section>
 
-      <footer className="flex flex-col items-center justify-between gap-2 px-2 py-7 text-center text-[10px] font-bold uppercase tracking-[.16em] text-slate-400 sm:flex-row sm:text-left lg:py-5"><span data-testid="text-footer-brand" className="order-2 whitespace-nowrap sm:order-1">© 2026 GZR Enterprises. <span className="whitespace-nowrap">All rights reserved.</span></span><span className="order-1 whitespace-nowrap text-center sm:order-2 sm:text-right">Official Personnel <span className="whitespace-nowrap">– Virtual Business Card</span></span></footer>
+      <footer className="flex flex-col items-center justify-between gap-2 px-2 py-7 text-center text-[10px] font-bold uppercase tracking-[.16em] text-slate-400 sm:flex-row sm:text-left lg:py-5"><span data-testid="text-footer-brand" className="order-2 whitespace-nowrap sm:order-1">© 2026 <a href={companyWebsite} target="_blank" rel="noreferrer" className="hover:text-[#14519a]">GZR Enterprises</a>. <span className="whitespace-nowrap">All rights reserved.</span></span><span className="order-1 whitespace-nowrap text-center sm:order-2 sm:text-right">Official Personnel <span className="whitespace-nowrap">– Virtual Business Card</span></span></footer>
     </div>
   </main>;
 }
@@ -159,12 +176,12 @@ function CardDirectory() {
   return <main className="card-page min-h-[100dvh] px-4 py-5 sm:px-8 sm:py-8 lg:py-4">
     <div className="mx-auto max-w-[880px]">
       <header className="fade-up flex items-center px-1 pb-5 sm:px-2">
-        <div className="flex items-center gap-2.5">
+        <a href={companyWebsite} target="_blank" rel="noreferrer" aria-label="Visit GZR Enterprises website" className="flex items-center gap-2.5">
           <img src={logoPath} alt="GZR Enterprises mark" className="logo-mark h-9 w-9 rounded-full" />
           <div className="leading-none">
             <div className="display-font whitespace-nowrap text-[18px] font-bold tracking-[.12em] text-[#064798] sm:text-[19px]">GZR <span className="font-normal tracking-[.18em] text-[#6b89aa]">ENTERPRISES</span></div>
           </div>
-        </div>
+        </a>
       </header>
 
       <section className="navy-shadow fade-up-1 relative overflow-hidden rounded-[2rem] bg-[#072d61] text-white">
@@ -174,7 +191,7 @@ function CardDirectory() {
         <div className="relative px-7 py-12 text-center sm:px-12 sm:py-16">
           <p className="text-xs font-semibold uppercase tracking-[.24em] text-[#8eb7d9]">Official GZR contact cards</p>
           <h1 className="display-font mt-4 text-[clamp(2.5rem,8vw,5.4rem)] font-semibold leading-[.94] tracking-[-.075em]">Connect directly.</h1>
-          <p className="mx-auto mt-6 max-w-xl text-sm leading-6 text-[#c2d9ec] sm:text-base">Find a direct digital business card for the GZR Enterprises team.</p>
+          <p className="mx-auto mt-6 max-w-xl text-sm leading-6 text-[#c2d9ec] sm:text-base">Find a direct digital business card for the <a href={companyWebsite} target="_blank" rel="noreferrer" className="font-semibold text-white underline decoration-white/40 underline-offset-4 hover:decoration-white">GZR Enterprises</a> team.</p>
         </div>
       </section>
 
@@ -184,22 +201,50 @@ function CardDirectory() {
           <span className="flex shrink-0 items-center gap-1.5 rounded-full border border-[#c4ddec] bg-white/70 px-2.5 py-1.5 text-[9px] font-bold uppercase tracking-[.1em] text-[#266095] sm:px-3 sm:text-[10px] sm:tracking-[.12em]"><span className="h-1.5 w-1.5 rounded-full bg-[#18b6d3] shadow-[0_0_8px_rgba(24,182,211,.95)]" /> Digital cards</span>
         </div>
         <div className="grid gap-3">
-          {employeeCards.map((card) => {
-            return <a key={card.slug} href={`${import.meta.env.BASE_URL}${card.slug}/`} className="action-link group flex items-center gap-4 rounded-[1.5rem] border border-[#d2e2ee] bg-white p-4 shadow-[0_12px_32px_rgba(33,77,120,.1)] hover:border-[#82bde8] sm:p-5">
-              <img src={card.portrait} alt="" className="h-16 w-16 shrink-0 rounded-2xl object-cover object-[center_27%] sm:h-20 sm:w-20" />
-              <span className="min-w-0 flex-1">
-                <span className="display-font block text-xl font-semibold tracking-[-.04em] text-[#0d315b] sm:text-2xl"><span className="whitespace-nowrap">{card.employee.firstName}</span>{' '}<span className="whitespace-nowrap">{card.employee.lastName}</span></span>
-                 <span className="mt-1 block text-sm text-slate-500"><span className="whitespace-nowrap">{card.employee.title}</span> <span className="mx-1 text-[#82a9c9]">/</span> <span className="whitespace-nowrap">{card.employee.department}</span></span>
-              </span>
-              <ExternalLink size={18} className="shrink-0 text-[#3975a7] transition-transform group-hover:translate-x-0.5" />
-            </a>;
-          })}
+          {employeeCards.map((card) => <EmployeeDirectoryCard key={card.slug} card={card} />)}
         </div>
       </section>
 
-      <footer className="px-2 py-8 text-center text-[10px] font-bold uppercase tracking-[.16em] text-slate-400 lg:py-6">© 2026 GZR Enterprises. <span className="whitespace-nowrap">All rights reserved.</span></footer>
+      <footer className="px-2 py-8 text-center text-[10px] font-bold uppercase tracking-[.16em] text-slate-400 lg:py-6">© 2026 <a href={companyWebsite} target="_blank" rel="noreferrer" className="hover:text-[#14519a]">GZR Enterprises</a>. <span className="whitespace-nowrap">All rights reserved.</span></footer>
     </div>
   </main>;
+}
+
+function EmployeeDirectoryCard({ card }: { card: EmployeeCard }) {
+  const nameRef = useRef<HTMLSpanElement>(null);
+  const detailsRef = useRef<HTMLSpanElement>(null);
+  const [isMultiline, setIsMultiline] = useState(false);
+
+  useEffect(() => {
+    const measureWrapping = () => {
+      const wrapped = [nameRef.current, detailsRef.current].some((element) => {
+        if (!element) return false;
+        const lineHeight = parseFloat(window.getComputedStyle(element).lineHeight);
+        return lineHeight > 0 && element.scrollHeight > lineHeight * 1.5;
+      });
+      setIsMultiline(wrapped);
+    };
+
+    measureWrapping();
+    const observer = new ResizeObserver(measureWrapping);
+    if (nameRef.current) observer.observe(nameRef.current);
+    if (detailsRef.current) observer.observe(detailsRef.current);
+    window.addEventListener('resize', measureWrapping);
+    return () => {
+      observer.disconnect();
+      window.removeEventListener('resize', measureWrapping);
+    };
+  }, []);
+
+  const portraitSize = isMultiline ? 'h-[5.5rem] w-[5.5rem] sm:h-[7.75rem] sm:w-[7.75rem]' : 'h-16 w-16 sm:h-20 sm:w-20';
+  return <a key={card.slug} href={`${import.meta.env.BASE_URL}${card.slug}/`} className="action-link group flex items-center gap-4 rounded-[1.5rem] border border-[#d2e2ee] bg-white p-4 shadow-[0_12px_32px_rgba(33,77,120,.1)] hover:border-[#82bde8] sm:p-5">
+    <img src={card.portrait} alt="" className={`${portraitSize} shrink-0 rounded-2xl object-cover object-[center_27%]`} />
+    <span className="min-w-0 flex-1">
+      <span ref={nameRef} className="display-font block text-xl font-semibold leading-7 tracking-[-.04em] text-[#0d315b] sm:text-2xl sm:leading-8"><span className="whitespace-nowrap">{card.employee.firstName}</span>{' '}<span className="whitespace-nowrap">{card.employee.lastName}</span></span>
+      <span ref={detailsRef} className="mt-1 block text-sm leading-5 text-slate-500"><span className="whitespace-nowrap">{card.employee.title}</span> <span className="mx-1 text-[#82a9c9]">/</span> <span className="whitespace-nowrap">{card.employee.department}</span></span>
+    </span>
+    <ExternalLink size={18} className="shrink-0 text-[#3975a7] transition-transform group-hover:translate-x-0.5" />
+  </a>;
 }
 
 function EmployeeCardRoute({ params }: { params: { slug: string } }) {
