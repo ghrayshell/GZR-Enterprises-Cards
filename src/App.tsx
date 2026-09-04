@@ -12,14 +12,15 @@ const portraitPath = `${import.meta.env.BASE_URL}ghrazielle-headshot.jpg`;
 
 const queryClient = new QueryClient();
 type Employee = {
-  firstName: string; lastName: string; title: string; company: string; phone: string; email: string;
+  firstName: string; lastName: string; title: string; department: string; company: string; phone: string; email: string;
   website: string; linkedin: string; location: string;
 };
 const employeeSlug = 'ghrazielle_deramos';
 const initialEmployee: Employee = {
-  firstName: 'Ghrazielle',
-  lastName: 'De Ramos',
-  title: 'Project Coordinator',
+  firstName: 'Ghrazielle Rei',
+  lastName: 'de Ramos',
+  title: 'Only Anak',
+  department: 'Lahat Department',
   company: 'GZR Enterprises',
   phone: '(+63) 93 386 20716',
   email: 'ghrazielle_deramos@gzrenterprises.com',
@@ -37,7 +38,7 @@ const employeeCards: EmployeeCard[] = [{
   slug: employeeSlug,
   employee: initialEmployee,
   portrait: portraitPath,
-  alt: 'Ghrazielle De Ramos, Project Coordinator at GZR Enterprises',
+  alt: 'Ghrazielle Rei de Ramos, Only Anak at GZR Enterprises',
 }];
 
 function LinkPill({ href, icon, label, testId, iconOnly = false }: { href: string; icon: ReactNode; label: string; testId: string; iconOnly?: boolean }) {
@@ -59,7 +60,7 @@ function ContactCard({ card }: { card: EmployeeCard }) {
     const vcard = [
       'BEGIN:VCARD', 'VERSION:3.0',
       `N:${employee.lastName};${employee.firstName};;;`, `FN:${fullName}`,
-      `ORG:${employee.company}`, `TITLE:${employee.title}`,
+      `ORG:${employee.company};${employee.department}`, `TITLE:${employee.title}`,
       `TEL;TYPE=WORK,VOICE:${phoneValue}`, `EMAIL;TYPE=WORK:${employee.email}`,
       employee.website ? `URL:${employee.website}` : '',
       employee.linkedin ? `X-SOCIALPROFILE;TYPE=linkedin:${employee.linkedin}` : '',
@@ -111,7 +112,7 @@ function ContactCard({ card }: { card: EmployeeCard }) {
               <div className="w-full min-w-0 text-center sm:w-auto sm:text-left">
                 <p className="mb-3 text-sm font-semibold uppercase tracking-[.18em] text-[#8eb7d9] sm:text-xs">Hello, I'm</p>
                 <h1 data-testid="text-employee-name" className="display-font max-w-[620px] whitespace-nowrap text-[clamp(1.6rem,8vw,5.4rem)] font-semibold leading-[.92] tracking-[-.075em] sm:whitespace-normal sm:text-[clamp(2.25rem,9vw,5.4rem)]"><span className="whitespace-nowrap">{employee.firstName}</span>{' '}<span className="whitespace-nowrap">{employee.lastName}</span></h1>
-                <p data-testid="text-employee-title" className="mt-3 whitespace-nowrap text-[clamp(.72rem,3.8vw,1.125rem)] font-medium text-[#b9dbf4] sm:mt-5 sm:whitespace-normal sm:text-lg"><span className="whitespace-nowrap">{employee.title}</span> <span className="mx-2 text-[#5286b4]">/</span> <span data-testid="text-employee-company" className="whitespace-nowrap">{employee.company}</span></p>
+                <p data-testid="text-employee-title" className="mt-3 whitespace-nowrap text-[clamp(.72rem,3.8vw,1.125rem)] font-medium text-[#b9dbf4] sm:mt-5 sm:whitespace-normal sm:text-lg"><span className="whitespace-nowrap">{employee.title}</span> <span className="mx-2 text-[#5286b4]">/</span> <span data-testid="text-employee-department" className="whitespace-nowrap">{employee.department}</span> <span className="mx-2 text-[#5286b4]">/</span> <span data-testid="text-employee-company" className="whitespace-nowrap">{employee.company}</span></p>
               </div>
             </div>
             <span className="mt-3 inline-flex self-center items-center gap-1.5 rounded-full border border-[#4d8bb2]/70 bg-[#0b4e87]/60 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[.12em] text-[#bdf8ff] sm:hidden"><span className="h-1.5 w-1.5 rounded-full bg-[#2de8ff] shadow-[0_0_8px_rgba(45,232,255,.95)]" /> Digital card</span>
@@ -185,7 +186,7 @@ function CardDirectory() {
               <img src={card.portrait} alt="" className="h-16 w-16 shrink-0 rounded-2xl object-cover object-[center_27%] sm:h-20 sm:w-20" />
               <span className="min-w-0 flex-1">
                 <span className="display-font block text-xl font-semibold tracking-[-.04em] text-[#0d315b] sm:text-2xl">{fullName}</span>
-                <span className="mt-1 block text-sm text-slate-500">{card.employee.title} <span className="mx-1 text-[#82a9c9]">/</span> {card.employee.company}</span>
+                 <span className="mt-1 block text-sm text-slate-500">{card.employee.title} <span className="mx-1 text-[#82a9c9]">/</span> {card.employee.department}</span>
               </span>
               <ExternalLink size={18} className="shrink-0 text-[#3975a7] transition-transform group-hover:translate-x-0.5" />
             </a>;
@@ -221,7 +222,7 @@ function PageTitle() {
   useEffect(() => {
     const slug = location.split('/').filter(Boolean).at(-1);
     const card = employeeCards.find((entry) => entry.slug === slug);
-    document.title = card ? `GZR Card – ${card.employee.firstName} ${card.employee.lastName}` : 'GZR Enterprises | Cards';
+    document.title = card ? `GZR Card | ${card.employee.firstName} ${card.employee.lastName}` : 'GZR Enterprises | Cards';
   }, [location]);
   return null;
 }
