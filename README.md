@@ -26,7 +26,7 @@ The contact actions are native `tel:` and `mailto:` links. The company email is 
 
 ### Messenger and social link previews
 
-The nested employee URL has a dedicated `public/ghrazielle_deramos/index.html` entry, so GitHub Pages serves it with HTTP 200 and social crawlers receive the card title, description, and absolute versioned 8-bit JPEG `og-card-ghrazielle_deramos-v3.jpg` preview image. The browser then follows the static meta redirect into the interactive React card. The `404.html` fallback remains for other direct nested paths. The versioned image URL intentionally bypasses stale Messenger image caching; if Messenger still shows an older preview, send the URL again with a harmless query string such as `?preview=3`.
+The nested employee URL has a dedicated `public/ghrazielle_deramos/index.html` entry, so GitHub Pages serves it with HTTP 200 and social crawlers receive the card title, description, and absolute versioned 8-bit JPEG `og-card-ghrazielle_deramos-v5.jpg` preview image. The browser then follows the static meta redirect into the interactive React card. The `404.html` fallback remains for other direct nested paths. The versioned image URL intentionally bypasses stale Messenger image caching; if Messenger still shows an older preview, send the URL again with a harmless query string such as `?preview=5`.
 
 ## Edit or remove an existing card
 
@@ -81,7 +81,8 @@ src/index.css                         # GZR visual language and responsive styli
 site-entry.gz.b64                     # compressed source for the Vite index.html entry
 public/gzr-logo.png                   # self-contained local GZR mark
 public/og-card-ghrazielle_deramos.jpg # previous Messenger/Facebook link preview image
-public/og-card-ghrazielle_deramos-v3.jpg # current cache-busted Messenger/Facebook link preview image
+public/og-card-ghrazielle_deramos-v3.jpg # previous cache-busted preview image
+public/og-card-ghrazielle_deramos-v5.jpg # current intact cache-busted Messenger/Facebook link preview image
 public/og-card-ghrazielle_deramos.png # original high-depth preview asset
 public/ghrazielle_deramos/index.html  # HTTP 200 nested route with share metadata
 public/404.gz.b64                     # compressed source for the GitHub Pages fallback
