@@ -43,7 +43,7 @@ const employeeCards: EmployeeCard[] = [{
 
 function LinkPill({ href, icon, label, testId, iconOnly = false }: { href: string; icon: ReactNode; label: string; testId: string; iconOnly?: boolean }) {
   const tone = 'border-white/80 bg-white text-[#164779] shadow-[0_4px_10px_rgba(255,255,255,.14)] hover:border-[#82bde8] hover:bg-white';
-  const sizing = iconOnly ? 'h-10 w-10 shrink-0 justify-center px-0 sm:h-11 sm:w-11' : 'min-w-0 flex-1 gap-1.5 px-2.5 text-xs sm:min-h-11 sm:flex-none sm:gap-2 sm:px-4 sm:text-sm';
+  const sizing = iconOnly ? 'h-10 w-10 shrink-0 justify-center px-0 sm:h-11 sm:w-11' : 'shrink-0 gap-1.5 px-2.5 text-xs sm:min-h-11 sm:gap-2 sm:px-4 sm:text-sm';
   return <a data-testid={testId} aria-label={label} title={label} href={href} target="_blank" rel="noreferrer" className={`action-link inline-flex min-h-10 items-center rounded-full border font-semibold ${sizing} ${tone}`}>
     {icon}<span className={iconOnly ? 'sr-only' : 'whitespace-nowrap'}>{label}</span>{!iconOnly && <ExternalLink size={13} className="shrink-0 text-current/60" />}
   </a>;
