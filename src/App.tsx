@@ -158,14 +158,13 @@ function ContactCard({ card }: { card: EmployeeCard }) {
 function CardDirectory() {
   return <main className="card-page min-h-[100dvh] px-4 py-5 sm:px-8 sm:py-8 lg:py-4">
     <div className="mx-auto max-w-[880px]">
-      <header className="fade-up flex items-center justify-between px-1 pb-5 sm:px-2">
+      <header className="fade-up flex items-center px-1 pb-5 sm:px-2">
         <div className="flex items-center gap-2.5">
           <img src={logoPath} alt="GZR Enterprises mark" className="logo-mark h-9 w-9 rounded-full" />
           <div className="leading-none">
-            <div className="display-font text-[18px] font-bold tracking-[.12em] text-[#064798] sm:text-[19px]">GZR <span className="font-normal tracking-[.18em] text-[#6b89aa]">ENTERPRISES</span></div>
+            <div className="display-font whitespace-nowrap text-[18px] font-bold tracking-[.12em] text-[#064798] sm:text-[19px]">GZR <span className="font-normal tracking-[.18em] text-[#6b89aa]">ENTERPRISES</span></div>
           </div>
         </div>
-        <span className="flex items-center gap-1.5 rounded-full border border-[#c4ddec] bg-white/70 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[.12em] text-[#266095]"><span className="h-1.5 w-1.5 rounded-full bg-[#18b6d3] shadow-[0_0_8px_rgba(24,182,211,.95)]" /> Digital cards</span>
       </header>
 
       <section className="navy-shadow fade-up-1 relative overflow-hidden rounded-[2rem] bg-[#072d61] text-white">
@@ -180,15 +179,17 @@ function CardDirectory() {
       </section>
 
       <section className="fade-up-2 mt-5">
-        <p className="mb-3 px-2 text-[10px] font-bold uppercase tracking-[.18em] text-[#3975a7]">Employee cards</p>
+        <div className="mb-3 flex items-center justify-between gap-3 px-2">
+          <p className="whitespace-nowrap text-[10px] font-bold uppercase tracking-[.18em] text-[#3975a7]">Employee cards</p>
+          <span className="flex shrink-0 items-center gap-1.5 rounded-full border border-[#c4ddec] bg-white/70 px-2.5 py-1.5 text-[9px] font-bold uppercase tracking-[.1em] text-[#266095] sm:px-3 sm:text-[10px] sm:tracking-[.12em]"><span className="h-1.5 w-1.5 rounded-full bg-[#18b6d3] shadow-[0_0_8px_rgba(24,182,211,.95)]" /> Digital cards</span>
+        </div>
         <div className="grid gap-3">
           {employeeCards.map((card) => {
-            const fullName = `${card.employee.firstName} ${card.employee.lastName}`;
             return <a key={card.slug} href={`${import.meta.env.BASE_URL}${card.slug}/`} className="action-link group flex items-center gap-4 rounded-[1.5rem] border border-[#d2e2ee] bg-white p-4 shadow-[0_12px_32px_rgba(33,77,120,.1)] hover:border-[#82bde8] sm:p-5">
               <img src={card.portrait} alt="" className="h-16 w-16 shrink-0 rounded-2xl object-cover object-[center_27%] sm:h-20 sm:w-20" />
               <span className="min-w-0 flex-1">
-                <span className="display-font block text-xl font-semibold tracking-[-.04em] text-[#0d315b] sm:text-2xl">{fullName}</span>
-                 <span className="mt-1 block text-sm text-slate-500">{card.employee.title} <span className="mx-1 text-[#82a9c9]">/</span> {card.employee.department}</span>
+                <span className="display-font block text-xl font-semibold tracking-[-.04em] text-[#0d315b] sm:text-2xl"><span className="whitespace-nowrap">{card.employee.firstName}</span>{' '}<span className="whitespace-nowrap">{card.employee.lastName}</span></span>
+                 <span className="mt-1 block text-sm text-slate-500"><span className="whitespace-nowrap">{card.employee.title}</span> <span className="mx-1 text-[#82a9c9]">/</span> <span className="whitespace-nowrap">{card.employee.department}</span></span>
               </span>
               <ExternalLink size={18} className="shrink-0 text-[#3975a7] transition-transform group-hover:translate-x-0.5" />
             </a>;
