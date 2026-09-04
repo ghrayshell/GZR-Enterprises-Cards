@@ -24,6 +24,10 @@ To add another employee card in this same repository:
 
 The contact actions are native `tel:` and `mailto:` links. The company email is generated from the HR-approved username. `additionalEmail` is blank by default; if filled, it appears after the company address, for example `ghrazielle_deramos@gzrenterprises.com, ghrazielle.deramos@gmail.com`. “Save to Contacts” creates a standards-compatible `.vcf` file in the browser using both email addresses when available. Downloaded contact files use the `GZR-givenname_lastname.vcf` naming format.
 
+### Messenger and social link previews
+
+The nested employee URL is served by GitHub Pages through `public/404.html` before its browser redirect can open the React card. Social crawlers do not run that redirect, so the fallback includes the card title, description, and absolute `og-card-ghrazielle_deramos.png` preview image. If Messenger shows an older preview after a change, send the URL again with a harmless query string such as `?preview=2`; Messenger caches link previews independently.
+
 ## Edit or remove an existing card
 
 To edit Ghrazielle’s current card, open `src/App.tsx` and update the values in `initialEmployee`. The `username` is the only identifier to edit for the URL, company email, headshot filename, and vCard filename. The name, title, company, phone, optional additional email, website, website button title, LinkedIn URL, location, hero bio, note, share caption, contact links, vCard, and page copy use that record. If the HR-approved username changes, rename the matching `headshot-givenname_lastname.jpg` file in `public/`; the portrait path updates automatically. Keep `additionalEmail` blank unless the employee wants another email displayed; when filled, it appears after the generated company email. Set `website` and `websiteLabel` to the employee’s own site when appropriate; leave `website` empty to use the GZR website and the default “GZR Website” button title. Set `linkedin` to an employee’s personal LinkedIn profile, or leave it empty to use the GZR Enterprises company profile automatically. The `shareCaption` becomes the message text when the browser’s native share sheet is used; the card URL is still attached separately.
@@ -75,7 +79,8 @@ GitHub Pages can return `404.html` for a direct nested visit. The included fallb
 src/App.tsx                 # employee card list, landing page, card UI, vCard action
 src/index.css               # GZR visual language and responsive styling
 site-entry.gz.b64           # compressed source for the Vite index.html entry
-public/gzr-logo.png         # self-contained local GZR mark
+   public/gzr-logo.png         # self-contained local GZR mark
+   public/og-card-ghrazielle_deramos.png # Messenger/Facebook link preview image
 public/404.gz.b64           # compressed source for the GitHub Pages fallback
 public/404.gz.b64            # compressed source for the GitHub Pages fallback
 pnpm-lock.yaml               # standalone dependency lockfile for Pages CI
