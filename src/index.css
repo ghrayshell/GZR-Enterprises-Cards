@@ -84,6 +84,9 @@ button { cursor: pointer; }
   mask-image: linear-gradient(to bottom, black, transparent 82%);
 }
 .display-font { font-family: var(--app-font-display); }
+.identity-copy { container-type: inline-size; }
+.card-name { font-size: clamp(1rem, 7vw, 5.4rem); }
+.card-role { font-size: clamp(.64rem, 3.8vw, 1.125rem); }
 .fade-up { animation: fade-up .65s cubic-bezier(.22,.7,.28,1) both; }
 .fade-up-1 { animation-delay: .1s; }
 .fade-up-2 { animation-delay: .18s; }
