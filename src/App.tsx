@@ -76,7 +76,7 @@ function ContactCard({ card }: { card: EmployeeCard }) {
   const websiteLabel = employee.websiteLabel || 'GZR Website';
   const linkedinHref = employee.linkedin || companyLinkedin;
   const roleLabel = `${employee.title} / ${employee.department}`;
-  const nameFontCqw = Math.min(10.5, Math.max(6.5, 100 / Math.max(fullName.length * 0.62, 1)));
+  const nameFontCqw = Math.min(11, Math.max(7.5, 100 / Math.max(fullName.length * 0.48, 1)));
   const roleFontCqw = Math.min(5.2, Math.max(3, 100 / Math.max(roleLabel.length * 0.58, 1)));
   const mobileTypography = {
     '--mobile-name-size': `clamp(1rem, ${nameFontCqw.toFixed(2)}cqw, 5.4rem)`,
@@ -140,7 +140,7 @@ function ContactCard({ card }: { card: EmployeeCard }) {
               </div>
               <div className="identity-copy w-full min-w-0 text-center sm:flex-1 sm:text-left" style={mobileTypography}>
                 <p className="mb-3 whitespace-nowrap text-sm font-semibold uppercase tracking-[.18em] text-[#8eb7d9] sm:text-xs">Hello, I'm</p>
-                 <h1 data-testid="text-employee-name" className="card-name display-font max-w-[620px] font-semibold leading-[.92] tracking-[-.075em]"><span>{employee.firstName}</span>{' '}<span>{employee.lastName}</span></h1>
+                 <h1 data-testid="text-employee-name" className="card-name display-font max-w-[620px] font-semibold leading-[.92] tracking-[-.075em]"><span className="whitespace-nowrap">{employee.firstName}</span>{' '}<span className="whitespace-nowrap">{employee.lastName}</span></h1>
                  <p data-testid="text-employee-title" className="card-role mt-3 font-medium leading-6 text-[#b9dbf4] sm:mt-5"><span>{employee.title}</span> <span className="mx-2 text-[#5286b4]">/</span> <span data-testid="text-employee-department">{employee.department}</span></p>
               </div>
             </div>
