@@ -6,7 +6,7 @@ A standalone, mobile-first cards site for GZR Enterprises employees. The custom 
 
 `https://cards.gzrenterprises.com/ghrazielle_deramos/`
 
-This project is intentionally independent from the main GZR website. It uses a small editable employee-card list with no database, admin dashboard, or links back to the company homepage.
+This project is intentionally independent from the main GZR website. It uses a small editable employee-card list with no database or admin dashboard. Brand logos and company-name links point to the GZR website, but the cards app does not depend on the main site's source or routes.
 
 ## Employee card template
 
@@ -14,7 +14,7 @@ The current card entry is **Ghrazielle De Ramos** at `ghrazielle_deramos`.
 
 To add another employee card in this same repository:
 
-1. Add a new `EmployeeCard` object to `employeeCards` in `src/App.tsx`, with a unique lowercase `slug`, employee details, a local portrait path, and accurate image alt text.
+1. Add a new `EmployeeCard` object to `employeeCards` in `src/App.tsx`, with a unique lowercase `slug`, employee details, editable `heroBio`, editable `note`, editable `shareCaption`, an optional website and `websiteLabel`, a local portrait path, and accurate image alt text.
 2. Add the new employee's approved headshot under `public/`, then reference it with `${import.meta.env.BASE_URL}filename.jpg`.
 3. Keep the existing `initialEmployee` object for Ghrazielle, or replace the sample values if this repository copy is intended to start with a different employee.
 4. The root landing page reads `employeeCards` automatically. Each entry appears at `cards.gzrenterprises.com/<slug>/`.
@@ -26,7 +26,7 @@ The contact actions are native `tel:` and `mailto:` links. “Save to Contacts�
 
 ## Edit or remove an existing card
 
-To edit Ghrazielle’s current card, open `src/App.tsx` and update the values in `initialEmployee`. The name, title, company, phone, email, website, LinkedIn URL, location, contact links, vCard, and page copy all use that record. If the employee or URL slug changes, also update `employeeSlug`, the portrait filename in `portraitPath`, and the image `alt` text.
+To edit Ghrazielle’s current card, open `src/App.tsx` and update the values in `initialEmployee`. The name, title, company, phone, email, website, website button title, LinkedIn URL, location, hero bio, note, share caption, contact links, vCard, and page copy all use that record. If the employee or URL slug changes, also update `employeeSlug`, the portrait filename in `portraitPath`, and the image `alt` text. Set `website` and `websiteLabel` to the employee’s own site when appropriate; leave `website` empty to hide the website button. The `shareCaption` becomes the message text when the browser’s native share sheet is used; the card URL is still attached separately.
 
 To remove a card, delete its entry from the `employeeCards` array. If it is no longer used by another entry, its headshot can also be deleted from `public/`. The old employee URL will no longer resolve to a card; keep `CNAME`, the Pages workflow, and the fallback source files.
 
