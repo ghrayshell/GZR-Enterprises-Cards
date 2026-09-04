@@ -22,7 +22,7 @@ const initialEmployee: Employee = {
   title: 'Only Anak',
   department: 'Lahat Department',
   company: 'GZR Enterprises',
-  phone: '(+63) 93 386 20716',
+  phone: '(+63) 933 862 0716',
   email: 'ghrazielle_deramos@gzrenterprises.com',
   website: 'https://gzrenterprises.com',
   linkedin: 'https://www.linkedin.com/company/gzr-enterprises',
@@ -54,6 +54,7 @@ function ContactCard({ card }: { card: EmployeeCard }) {
   const [shared, setShared] = useState(false);
   const fullName = `${employee.firstName} ${employee.lastName}`;
   const phoneValue = employee.phone.replace(/[^\d+]/g, '');
+  const [emailUsername, emailDomain] = employee.email.split('@');
   const viberHref = `viber://chat?number=${encodeURIComponent(phoneValue)}`;
 
   const downloadVCard = () => {
@@ -138,7 +139,7 @@ function ContactCard({ card }: { card: EmployeeCard }) {
           <div className="mb-5 flex items-start justify-between gap-4 lg:mb-4"><div className="lg:flex lg:items-baseline lg:gap-3"><p className="whitespace-nowrap text-[10px] font-bold uppercase tracking-[.18em] text-[#3975a7] lg:text-lg lg:tracking-[.08em]">Reach me directly</p><h2 className="display-font mt-2 whitespace-nowrap text-2xl font-semibold tracking-[-.04em] text-[#0d315b] lg:mt-0 lg:text-base lg:font-medium lg:tracking-[-.02em]">Keep this card close.</h2></div><div className="rounded-xl bg-[#dceefd] p-3 text-[#1463a1] lg:p-2.5"><Sparkles size={19} className="lg:h-4 lg:w-4" /></div></div>
           <div className="grid gap-3 lg:gap-2">
             <a data-testid="link-phone" href={`tel:${phoneValue}`} className="action-link group flex min-h-[72px] items-center gap-3 rounded-xl border border-[#d2e2ee] bg-white px-4 hover:border-[#82bde8] lg:min-h-[72px] lg:px-5"><span className="rounded-lg bg-[#e7f3fc] p-2.5 text-[#1164a6] lg:p-2.5"><Phone size={18} /></span><span><span className="block text-[10px] font-bold uppercase tracking-[.12em] text-slate-400">Phone</span><span data-testid="text-phone" className="mt-1 block text-sm font-semibold text-[#123d68]">{employee.phone}</span></span></a>
-            <a data-testid="link-email" href={`mailto:${employee.email}`} className="action-link group flex min-h-[72px] items-center gap-3 rounded-xl border border-[#d2e2ee] bg-white px-4 hover:border-[#82bde8] lg:min-h-[72px] lg:px-5"><span className="rounded-lg bg-[#e7f3fc] p-2.5 text-[#1164a6] lg:p-2.5"><Mail size={18} /></span><span className="min-w-0"><span className="block text-[10px] font-bold uppercase tracking-[.12em] text-slate-400">Email</span><span data-testid="text-email" className="mt-1 block break-all text-sm font-semibold text-[#123d68]">{employee.email}</span></span></a>
+            <a data-testid="link-email" href={`mailto:${employee.email}`} className="action-link group flex min-h-[72px] items-center gap-3 rounded-xl border border-[#d2e2ee] bg-white px-4 hover:border-[#82bde8] lg:min-h-[72px] lg:px-5"><span className="rounded-lg bg-[#e7f3fc] p-2.5 text-[#1164a6] lg:p-2.5"><Mail size={18} /></span><span className="min-w-0"><span className="block text-[10px] font-bold uppercase tracking-[.12em] text-slate-400">Email</span><span data-testid="text-email" className="mt-1 block break-normal text-sm font-semibold text-[#123d68]"><span className="inline-block whitespace-nowrap">{emailUsername}</span><wbr /><span className="inline-block whitespace-nowrap">@{emailDomain}</span></span></span></a>
           </div>
         </div>
         <div className="soft-shadow rounded-[1.5rem] border border-[#d5e4ef] bg-white p-5 sm:p-7 lg:p-6">
