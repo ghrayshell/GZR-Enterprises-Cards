@@ -103,23 +103,23 @@ function ContactCard({ card }: { card: EmployeeCard }) {
         <div className="pointer-events-none absolute -right-24 -top-36 h-[32rem] w-[32rem] rounded-full border border-white/10" />
         <div className="pointer-events-none absolute -right-4 -top-16 h-[25rem] w-[25rem] rounded-full border border-white/10" />
         <div className="pointer-events-none absolute bottom-[-8rem] left-[35%] h-56 w-56 rounded-full bg-[#1684c4]/20 blur-3xl" />
-        <div className="relative grid gap-4 p-8 sm:gap-6 sm:p-10 lg:grid-cols-[minmax(0,1fr)_320px] lg:gap-0 lg:p-10">
-          <div className="flex flex-col justify-center lg:translate-x-3">
+        <div className="relative grid gap-10 p-8 sm:gap-6 sm:p-10 lg:grid-cols-[minmax(0,1fr)_300px] lg:gap-12 lg:p-10">
+          <div className="flex min-w-0 flex-col justify-center">
             <div className="flex flex-col items-center gap-5 sm:flex-row sm:items-stretch sm:gap-7">
               <div className="portrait-slot portrait-grid relative aspect-[4/5] w-48 shrink-0 self-center rounded-[1.65rem] border-4 border-white/15 shadow-lg max-[380px]:w-44 sm:aspect-auto sm:self-stretch sm:w-44">
                 <img data-testid="img-employee-headshot" src={card.portrait} alt={card.alt} className="portrait-image absolute inset-0 h-full w-full rounded-[1.35rem]" />
               </div>
               <div className="w-full min-w-0 text-center sm:w-auto sm:text-left">
                 <p className="mb-3 text-sm font-semibold uppercase tracking-[.18em] text-[#8eb7d9] sm:text-xs">Hello, I'm</p>
-                <h1 data-testid="text-employee-name" className="display-font max-w-[620px] break-words text-[clamp(1.6rem,8vw,5.4rem)] font-semibold leading-[.92] tracking-[-.075em] sm:text-[clamp(2.25rem,9vw,5.4rem)]"><span className="whitespace-nowrap">{employee.firstName}</span>{' '}<span className="whitespace-nowrap">{employee.lastName}</span></h1>
+                <h1 data-testid="text-employee-name" className="display-font max-w-[620px] break-words text-[clamp(1.6rem,8vw,5.4rem)] font-semibold leading-[.92] tracking-[-.075em] sm:text-[clamp(2.25rem,6.8vw,5.4rem)]"><span className="whitespace-nowrap">{employee.firstName}</span>{' '}<span className="whitespace-nowrap">{employee.lastName}</span></h1>
                 <p data-testid="text-employee-title" className="mt-3 text-[clamp(.72rem,3.8vw,1.125rem)] font-medium leading-6 text-[#b9dbf4] sm:mt-5 sm:text-lg"><span className="whitespace-nowrap">{employee.title}</span> <span className="mx-2 text-[#5286b4]">/</span> <span data-testid="text-employee-department" className="whitespace-nowrap">{employee.department}</span></p>
               </div>
             </div>
             <span className="mt-3 inline-flex self-center items-center gap-1.5 rounded-full border border-[#4d8bb2]/70 bg-[#0b4e87]/60 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[.12em] text-[#bdf8ff] sm:hidden"><span className="h-1.5 w-1.5 rounded-full bg-[#2de8ff] shadow-[0_0_8px_rgba(45,232,255,.95)]" /> Digital card</span>
             <p className="mt-7 w-full text-center text-sm leading-6 text-[#c2d9ec] sm:mt-9 sm:text-left lg:max-w-xl">The person to call when a project needs a clear path up. Let’s connect and move the work forward.</p>
           </div>
-          <div className="w-full lg:flex lg:-translate-x-4 lg:flex-col lg:items-center lg:justify-self-center lg:self-center">
-            <div className="grid w-full gap-2 lg:mx-auto lg:w-[300px] lg:translate-y-3">
+          <div className="w-full lg:flex lg:flex-col lg:items-center lg:justify-self-center lg:self-center">
+            <div className="grid w-full gap-2 lg:mx-auto lg:w-[300px]">
               <button data-testid="button-save-contact" onClick={downloadVCard} className="action-link inline-flex min-h-16 w-full items-center justify-center gap-3 rounded-xl border border-transparent bg-white px-6 py-4 text-base font-bold text-[#07366f] shadow-[0_6px_14px_rgba(169,226,244,.24)] ring-1 ring-[#b9e3f2] hover:border-[#82bde8]"><Save size={20} />{saved ? 'Contact saved' : 'Save to Contacts'}</button>
               <a data-testid="link-call-hero" href={`tel:${phoneValue}`} className="action-link inline-flex min-h-16 w-full items-center justify-center gap-3 rounded-xl border border-[#9fc5ed] bg-[#cce2ff] px-6 py-4 text-base font-bold text-[#004aad] shadow-[0_5px_12px_rgba(204,226,255,.2)] hover:border-[#82bde8]"><Phone size={19} /> Call {employee.firstName}</a>
               <a data-testid="link-viber-hero" aria-label={`Send ${employee.firstName} a text message`} href={`sms:${phoneValue}`} className="action-link inline-flex min-h-16 w-full items-center justify-center gap-3 rounded-xl border border-[#4c83d2] bg-[#004aad] px-6 py-4 text-base font-bold text-white shadow-[0_5px_12px_rgba(0,74,173,.18)] hover:border-[#82bde8]"><MessageCircle size={20} /> Send a Text Message</a>
