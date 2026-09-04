@@ -1,0 +1,135 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+@import 'tailwindcss';
+@import 'tw-animate-css';
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+  --font-sans: var(--app-font-sans);
+  --font-serif: var(--app-font-display);
+  --radius-lg: var(--radius);
+}
+
+:root {
+  --background: 212 40% 96%;
+  --foreground: 217 46% 16%;
+  --card: 0 0% 100%;
+  --card-foreground: 217 46% 16%;
+  --primary: 213 100% 34%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 211 73% 93%;
+  --secondary-foreground: 213 74% 25%;
+  --muted: 211 35% 91%;
+  --muted-foreground: 217 20% 43%;
+  --accent: 201 92% 52%;
+  --accent-foreground: 217 46% 13%;
+  --border: 211 29% 84%;
+  --input: 211 27% 78%;
+  --ring: 201 92% 52%;
+  --card-border: 211 29% 84%;
+  --app-font-sans: 'DM Sans', sans-serif;
+  --app-font-display: 'Space Grotesk', sans-serif;
+  --radius: 1.25rem;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  min-width: 320px;
+  overflow-x: hidden;
+  background: hsl(var(--background));
+  color: hsl(var(--foreground));
+  font-family: var(--app-font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+button, a, input { font: inherit; }
+button { cursor: pointer; }
+::selection { background: #b9ddff; color: #063d82; }
+
+.card-page {
+  min-height: 100dvh;
+  position: relative;
+  isolation: isolate;
+  background:
+    radial-gradient(circle at 8% 12%, rgba(151, 205, 255, .42), transparent 24rem),
+    radial-gradient(circle at 92% 78%, rgba(126, 192, 247, .24), transparent 28rem),
+    #eef5fa;
+}
+.card-page::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: .26;
+  background-image: linear-gradient(rgba(0, 74, 173, .09) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 74, 173, .09) 1px, transparent 1px);
+  background-size: 42px 42px;
+  mask-image: linear-gradient(to bottom, black, transparent 82%);
+}
+.display-font { font-family: var(--app-font-display); }
+.fade-up { animation: fade-up .65s cubic-bezier(.22,.7,.28,1) both; }
+.fade-up-1 { animation-delay: .1s; }
+.fade-up-2 { animation-delay: .18s; }
+.fade-up-3 { animation-delay: .26s; }
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.logo-mark {
+  object-fit: contain;
+  filter: drop-shadow(0 5px 10px rgba(0, 55, 130, .13));
+}
+.portrait-slot {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 50% 36%, rgba(153, 210, 255, .34), transparent 34%),
+    linear-gradient(135deg, #d8ecff 0%, #a9cdf1 47%, #6b9ed0 100%);
+}
+.portrait-image {
+  object-fit: cover;
+  object-position: center 27%;
+}
+.portrait-slot::after {
+  content: '';
+  position: absolute;
+  inset: 12%;
+  border: 1px solid rgba(255,255,255,.58);
+  border-radius: 50%;
+  transform: rotate(-18deg) scaleX(.72);
+}
+.portrait-grid {
+  background-image: linear-gradient(rgba(0, 74, 173, .13) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 74, 173, .13) 1px, transparent 1px);
+  background-size: 19px 19px;
+}
+.soft-shadow { box-shadow: 0 22px 65px rgba(33, 77, 120, .15), 0 3px 10px rgba(18, 62, 105, .06); }
+.navy-shadow { box-shadow: 0 26px 70px rgba(4, 34, 72, .24); }
+.action-link { transition: transform .2s ease, background-color .2s ease, border-color .2s ease; }
+.action-link:hover { transform: translateY(-2px); }
+.action-link:active { transform: translateY(0); }
+.focus-ring:focus-visible, a:focus-visible, button:focus-visible, input:focus-visible {
+  outline: 3px solid #53baf7;
+  outline-offset: 3px;
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+}
