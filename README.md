@@ -76,14 +76,13 @@ GitHub Pages can return `404.html` for a direct nested visit. The included fallb
 ## Project structure
 
 ```text
-src/App.tsx                 # employee card list, landing page, card UI, vCard action
-src/index.css               # GZR visual language and responsive styling
-site-entry.gz.b64           # compressed source for the Vite index.html entry
-   public/gzr-logo.png         # self-contained local GZR mark
-   public/og-card-ghrazielle_deramos.png # Messenger/Facebook link preview image
-public/404.gz.b64           # compressed source for the GitHub Pages fallback
-public/404.gz.b64            # compressed source for the GitHub Pages fallback
-pnpm-lock.yaml               # standalone dependency lockfile for Pages CI
-.github/workflows/           # cards-only Pages deployment
-CNAME                        # cards.gzrenterprises.com
+src/App.tsx                           # employee card list, landing page, card UI, vCard action
+src/index.css                         # GZR visual language and responsive styling
+site-entry.gz.b64                     # compressed source for the Vite index.html entry
+public/gzr-logo.png                   # self-contained local GZR mark
+public/og-card-ghrazielle_deramos.png # Messenger/Facebook link preview image
+public/404.gz.b64                     # compressed source for the GitHub Pages fallback
+pnpm-lock.yaml                        # standalone dependency lockfile for Pages CI
+.github/workflows/                    # cards-only Pages deployment
+CNAME                                 # cards.gzrenterprises.com
 ```
