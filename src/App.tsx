@@ -203,6 +203,16 @@ function EmployeeCardRoute({ params }: { params: { slug: string } }) {
   return card ? <ContactCard card={card} /> : <NotFound />;
 }
 
+function restoreFallbackRoute() {
+  const redirect = new URLSearchParams(window.location.search).get('redirect');
+  if (!redirect || !redirect.startsWith('/') || redirect.startsWith('//')) return;
+
+  const target = new URL(redirect, window.location.origin);
+  if (target.origin !== window.location.origin) return;
+
+  window.history.replaceState({}, '', `${target.pathname}${target.search}${target.hash}`);
+}
+
 function Router() {
   return <Switch><Route path="/:slug/" component={EmployeeCardRoute} /><Route path="/:slug" component={EmployeeCardRoute} /><Route path="/" component={CardDirectory} /><Route component={NotFound} /></Switch>;
 }
@@ -211,6 +221,7 @@ function RoutedErrorBoundary({ children }: { children: ReactNode }) {
   return <ErrorBoundary resetKey={location}>{children}</ErrorBoundary>;
 }
 function App() {
+  restoreFallbackRoute();
   return <QueryClientProvider client={queryClient}><TooltipProvider><WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, '')}><RoutedErrorBoundary><Router /></RoutedErrorBoundary></WouterRouter><Toaster /></TooltipProvider></QueryClientProvider>;
 }
 export default App;
