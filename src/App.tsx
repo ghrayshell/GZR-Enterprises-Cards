@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type ReactNode } from 'react';
+import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { BriefcaseBusiness, Check, ExternalLink, Globe2, Linkedin, Mail, MessageCircle, Phone, Save, Share2, Sparkles } from 'lucide-react';
 import { SiViber } from 'react-icons/si';
@@ -78,6 +78,10 @@ function ContactCard({ card }: { card: EmployeeCard }) {
   const roleLabel = `${employee.title} / ${employee.department}`;
   const nameFontCqw = Math.min(10.5, Math.max(6.5, 100 / Math.max(fullName.length * 0.62, 1)));
   const roleFontCqw = Math.min(5.2, Math.max(3, 100 / Math.max(roleLabel.length * 0.58, 1)));
+  const mobileTypography = {
+    '--mobile-name-size': `clamp(1rem, ${nameFontCqw.toFixed(2)}cqw, 5.4rem)`,
+    '--mobile-role-size': `clamp(.64rem, ${roleFontCqw.toFixed(2)}cqw, 1.125rem)`,
+  } as CSSProperties;
 
   const downloadVCard = () => {
     const vcard = [
@@ -134,10 +138,10 @@ function ContactCard({ card }: { card: EmployeeCard }) {
               <div className="portrait-slot portrait-grid relative aspect-[4/5] w-48 shrink-0 self-center rounded-[1.65rem] border-4 border-white/15 shadow-lg max-[380px]:w-44 sm:aspect-auto sm:self-stretch sm:w-44">
                 <img data-testid="img-employee-headshot" src={card.portrait} alt={card.alt} className="portrait-image absolute inset-0 h-full w-full rounded-[1.35rem]" />
               </div>
-              <div className="identity-copy w-full min-w-0 text-center sm:flex-1 sm:text-left">
+              <div className="identity-copy w-full min-w-0 text-center sm:flex-1 sm:text-left" style={mobileTypography}>
                 <p className="mb-3 whitespace-nowrap text-sm font-semibold uppercase tracking-[.18em] text-[#8eb7d9] sm:text-xs">Hello, I'm</p>
-                 <h1 data-testid="text-employee-name" style={{ fontSize: `clamp(1rem, ${nameFontCqw.toFixed(2)}cqw, 5.4rem)` }} className="card-name display-font max-w-[620px] whitespace-nowrap font-semibold leading-[.92] tracking-[-.075em]"><span>{employee.firstName}</span>{' '}<span>{employee.lastName}</span></h1>
-                 <p data-testid="text-employee-title" style={{ fontSize: `clamp(.64rem, ${roleFontCqw.toFixed(2)}cqw, 1.125rem)` }} className="card-role mt-3 whitespace-nowrap font-medium leading-6 text-[#b9dbf4] sm:mt-5"><span>{employee.title}</span> <span className="mx-2 text-[#5286b4]">/</span> <span data-testid="text-employee-department">{employee.department}</span></p>
+                 <h1 data-testid="text-employee-name" className="card-name display-font max-w-[620px] font-semibold leading-[.92] tracking-[-.075em]"><span>{employee.firstName}</span>{' '}<span>{employee.lastName}</span></h1>
+                 <p data-testid="text-employee-title" className="card-role mt-3 font-medium leading-6 text-[#b9dbf4] sm:mt-5"><span>{employee.title}</span> <span className="mx-2 text-[#5286b4]">/</span> <span data-testid="text-employee-department">{employee.department}</span></p>
               </div>
             </div>
             <span className="mt-3 inline-flex self-center items-center gap-1.5 rounded-full border border-[#4d8bb2]/70 bg-[#0b4e87]/60 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[.12em] text-[#bdf8ff] sm:hidden"><span className="h-1.5 w-1.5 rounded-full bg-[#2de8ff] shadow-[0_0_8px_rgba(45,232,255,.95)]" /> Digital card</span>
