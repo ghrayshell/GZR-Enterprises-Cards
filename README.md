@@ -14,19 +14,19 @@ The current card entry is **Ghrazielle De Ramos** at `ghrazielle_deramos`.
 
 To add another employee card in this same repository:
 
-1. Add a new `EmployeeCard` object to `employeeCards` in `src/App.tsx`, with a unique lowercase `slug`, employee details, editable `heroBio`, editable `note`, editable `shareCaption`, an optional website and `websiteLabel`, a local portrait path, and accurate image alt text.
-2. Add the new employee's approved headshot under `public/`, then reference it with `${import.meta.env.BASE_URL}filename.jpg`.
+1. Add a new `EmployeeCard` object to `employeeCards` in `src/App.tsx`, with a unique HR-approved lowercase `username`, employee details, optional `additionalEmail`, editable `heroBio`, editable `note`, editable `shareCaption`, an optional website and `websiteLabel`, a local portrait path, and accurate image alt text.
+2. Add the new employee's approved headshot under `public/`, using the `headshot-givenname_lastname.jpg` naming convention, then reference it with `${import.meta.env.BASE_URL}filename.jpg`.
 3. Keep the existing `initialEmployee` object for Ghrazielle, or replace the sample values if this repository copy is intended to start with a different employee.
 4. The root landing page reads `employeeCards` automatically. Each entry appears at `cards.gzrenterprises.com/<slug>/`.
-5. Keep the `slug` in `givenname_lastname` format. The route and vCard filename are generated from the card entry and employee name.
+5. Have HR provide the canonical `givenname_lastname` username. Edit that one value in `initialEmployee`; the URL slug, company email (`username@gzrenterprises.com`), headshot filename (`headshot-givenname_lastname.jpg`), and vCard filename (`GZR-givenname_lastname.vcf`) update from it automatically.
 6. Replace `public/gzr-logo.png` only if the brand asset changes.
 7. Build and deploy the same repository. Do not create another repository or change `CNAME`.
 
-The contact actions are native `tel:` and `mailto:` links. “Save to Contacts” creates a standards-compatible `.vcf` file in the browser using the current values from the template record.
+The contact actions are native `tel:` and `mailto:` links. The company email is generated from the HR-approved username. `additionalEmail` is blank by default; if filled, it appears after the company address, for example `ghrazielle_deramos@gzrenterprises.com, ghrazielle.deramos@gmail.com`. “Save to Contacts” creates a standards-compatible `.vcf` file in the browser using both email addresses when available. Downloaded contact files use the `GZR-givenname_lastname.vcf` naming format.
 
 ## Edit or remove an existing card
 
-To edit Ghrazielle’s current card, open `src/App.tsx` and update the values in `initialEmployee`. The name, title, company, phone, email, website, website button title, LinkedIn URL, location, hero bio, note, share caption, contact links, vCard, and page copy all use that record. If the employee or URL slug changes, also update `employeeSlug`, the portrait filename in `portraitPath`, and the image `alt` text. Set `website` and `websiteLabel` to the employee’s own site when appropriate; leave `website` empty to hide the website button. The `shareCaption` becomes the message text when the browser’s native share sheet is used; the card URL is still attached separately.
+To edit Ghrazielle’s current card, open `src/App.tsx` and update the values in `initialEmployee`. The `username` is the only identifier to edit for the URL, company email, headshot filename, and vCard filename. The name, title, company, phone, optional additional email, website, website button title, LinkedIn URL, location, hero bio, note, share caption, contact links, vCard, and page copy use that record. If the HR-approved username changes, rename the matching `headshot-givenname_lastname.jpg` file in `public/`; the portrait path updates automatically. Keep `additionalEmail` blank unless the employee wants another email displayed; when filled, it appears after the generated company email. Set `website` and `websiteLabel` to the employee’s own site when appropriate; leave `website` empty to use the GZR website and the default “GZR Website” button title. Set `linkedin` to an employee’s personal LinkedIn profile, or leave it empty to use the GZR Enterprises company profile automatically. The `shareCaption` becomes the message text when the browser’s native share sheet is used; the card URL is still attached separately.
 
 To remove a card, delete its entry from the `employeeCards` array. If it is no longer used by another entry, its headshot can also be deleted from `public/`. The old employee URL will no longer resolve to a card; keep `CNAME`, the Pages workflow, and the fallback source files.
 
