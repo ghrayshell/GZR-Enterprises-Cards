@@ -47,7 +47,7 @@ The repository keeps compressed base64 sources for the two HTML entry files so t
 
 ## GitHub Pages and custom domain setup
 
-1. Create a new GitHub repository for the cards project. Copy the contents of this folder into that repository, including `.github/workflows/deploy-pages.yml`, `public/404.html`, and `CNAME`.
+1. Create a new GitHub repository for the cards project. Copy the contents of this folder into that repository, including `.github/workflows/deploy-pages.yml`, `public/404.gz.b64`, `pnpm-lock.yaml`, and `CNAME`. The workflow materializes `public/404.html` during the build.
 2. Push the repository's default branch as `main`.
 3. In GitHub, open **Settings → Pages** and set the source to **GitHub Actions**.
 4. Add the custom domain `cards.gzrenterprises.com` in the Pages settings. The repository's `CNAME` file contains the same value.
@@ -71,7 +71,8 @@ src/index.css               # GZR visual language and responsive styling
 site-entry.gz.b64           # compressed source for the Vite index.html entry
 public/gzr-logo.png         # self-contained local GZR mark
 public/404.gz.b64           # compressed source for the GitHub Pages fallback
-public/404.html              # GitHub Pages nested-route fallback
+public/404.gz.b64            # compressed source for the GitHub Pages fallback
+pnpm-lock.yaml               # standalone dependency lockfile for Pages CI
 .github/workflows/           # cards-only Pages deployment
 CNAME                        # cards.gzrenterprises.com
 ```
