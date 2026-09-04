@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/employee-cards/"
+title = "Employee Digital Cards"
+description = "A standalone, mobile-first digital business card template for GZR Enterprises employees, with direct contact actions and downloadable vCards."
+version = "1.0.0"
+id = "artifacts/employee-cards"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/employee-cards/" ]
+localPort = 21777
+
+[services.development]
+run = "pnpm --filter @workspace/employee-cards run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/employee-cards", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/employee-cards/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "21777"
+BASE_PATH = "/employee-cards/"
