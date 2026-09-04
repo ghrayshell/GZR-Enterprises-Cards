@@ -141,7 +141,7 @@ function ContactCard({ card }: { card: EmployeeCard }) {
               <div className="identity-copy w-full min-w-0 text-center sm:flex-1 sm:text-left" style={mobileTypography}>
                 <p className="mb-3 whitespace-nowrap text-sm font-semibold uppercase tracking-[.18em] text-[#8eb7d9] sm:text-xs">Hello, I'm</p>
                  <h1 data-testid="text-employee-name" className="card-name display-font max-w-[620px] font-semibold leading-[.92] tracking-[-.075em]"><span className="whitespace-nowrap">{employee.firstName}</span>{' '}<span className="whitespace-nowrap">{employee.lastName}</span></h1>
-                 <p data-testid="text-employee-title" className="card-role mt-3 font-medium leading-6 text-[#b9dbf4] sm:mt-5"><span>{employee.title}</span> <span className="mx-2 text-[#5286b4]">/</span> <span data-testid="text-employee-department">{employee.department}</span></p>
+                 <p data-testid="text-employee-title" className="card-role mt-3 font-medium leading-6 text-[#b9dbf4] sm:mt-5"><span className="whitespace-nowrap">{employee.title}</span> <span className="mx-2 text-[#5286b4]">/</span> <span data-testid="text-employee-department" className="whitespace-nowrap">{employee.department}</span></p>
               </div>
             </div>
             <span className="mt-3 inline-flex self-center items-center gap-1.5 rounded-full border border-[#4d8bb2]/70 bg-[#0b4e87]/60 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[.12em] text-[#bdf8ff] sm:hidden"><span className="h-1.5 w-1.5 rounded-full bg-[#2de8ff] shadow-[0_0_8px_rgba(45,232,255,.95)]" /> Digital card</span>
