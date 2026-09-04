@@ -15,7 +15,7 @@
     <link rel="icon" type="image/png" sizes="1000x1000" href="%BASE_URL%gzr-logo.png?v=2" />
     <link rel="apple-touch-icon" sizes="1000x1000" href="%BASE_URL%gzr-logo.png?v=2" />
   </head>
-  <body onload="import('./assets/app-bundle.js')">
+  <body onload="import('./assets/app-bundle.js').catch(function(){return import('./src/main.tsx')})">
     <div id="root"></div>
   </body>
 </html>
