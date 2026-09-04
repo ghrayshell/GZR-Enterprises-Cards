@@ -75,6 +75,9 @@ function ContactCard({ card }: { card: EmployeeCard }) {
   const websiteHref = employee.website || companyWebsite;
   const websiteLabel = employee.websiteLabel || 'GZR Website';
   const linkedinHref = employee.linkedin || companyLinkedin;
+  const roleLabel = `${employee.title} / ${employee.department}`;
+  const nameFontCqw = Math.min(10.5, Math.max(6.5, 100 / Math.max(fullName.length * 0.62, 1)));
+  const roleFontCqw = Math.min(5.2, Math.max(3, 100 / Math.max(roleLabel.length * 0.58, 1)));
 
   const downloadVCard = () => {
     const vcard = [
@@ -131,10 +134,10 @@ function ContactCard({ card }: { card: EmployeeCard }) {
               <div className="portrait-slot portrait-grid relative aspect-[4/5] w-48 shrink-0 self-center rounded-[1.65rem] border-4 border-white/15 shadow-lg max-[380px]:w-44 sm:aspect-auto sm:self-stretch sm:w-44">
                 <img data-testid="img-employee-headshot" src={card.portrait} alt={card.alt} className="portrait-image absolute inset-0 h-full w-full rounded-[1.35rem]" />
               </div>
-              <div className="w-full min-w-0 text-center sm:flex-1 sm:text-left">
+              <div className="identity-copy w-full min-w-0 text-center sm:flex-1 sm:text-left">
                 <p className="mb-3 whitespace-nowrap text-sm font-semibold uppercase tracking-[.18em] text-[#8eb7d9] sm:text-xs">Hello, I'm</p>
-                <h1 data-testid="text-employee-name" className="display-font max-w-[620px] break-words text-[clamp(1.6rem,8vw,5.4rem)] font-semibold leading-[.92] tracking-[-.075em] sm:text-[clamp(2.25rem,6.8vw,5.4rem)] lg:text-[clamp(2.25rem,5.2vw,5.4rem)]"><span className="whitespace-nowrap">{employee.firstName}</span>{' '}<span className="whitespace-nowrap">{employee.lastName}</span></h1>
-                <p data-testid="text-employee-title" className="mt-3 text-[clamp(.72rem,3.8vw,1.125rem)] font-medium leading-6 text-[#b9dbf4] sm:mt-5 sm:text-lg"><span className="whitespace-nowrap">{employee.title}</span> <span className="mx-2 text-[#5286b4]">/</span> <span data-testid="text-employee-department" className="whitespace-nowrap">{employee.department}</span></p>
+                 <h1 data-testid="text-employee-name" style={{ fontSize: `clamp(1rem, ${nameFontCqw.toFixed(2)}cqw, 5.4rem)` }} className="card-name display-font max-w-[620px] whitespace-nowrap font-semibold leading-[.92] tracking-[-.075em]"><span>{employee.firstName}</span>{' '}<span>{employee.lastName}</span></h1>
+                 <p data-testid="text-employee-title" style={{ fontSize: `clamp(.64rem, ${roleFontCqw.toFixed(2)}cqw, 1.125rem)` }} className="card-role mt-3 whitespace-nowrap font-medium leading-6 text-[#b9dbf4] sm:mt-5"><span>{employee.title}</span> <span className="mx-2 text-[#5286b4]">/</span> <span data-testid="text-employee-department">{employee.department}</span></p>
               </div>
             </div>
             <span className="mt-3 inline-flex self-center items-center gap-1.5 rounded-full border border-[#4d8bb2]/70 bg-[#0b4e87]/60 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[.12em] text-[#bdf8ff] sm:hidden"><span className="h-1.5 w-1.5 rounded-full bg-[#2de8ff] shadow-[0_0_8px_rgba(45,232,255,.95)]" /> Digital card</span>
